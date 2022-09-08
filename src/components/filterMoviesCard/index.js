@@ -39,7 +39,7 @@ export default function FilterMoviesCard(props) {
           Filter the movies.
         </Typography>
         <TextField
-          sx={{...formControl}}
+          sx={formControl}
           id="filled-search"
           label="Search field"
           type="search"
