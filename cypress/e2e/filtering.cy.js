@@ -1,13 +1,8 @@
-let movies; // List of movies from TMDB
+import { filterByGenre, filterByTitle } from   '../support/e2e'  
 
-// Utility functions
-const filterByTitle = (movieList, string) =>
-  movieList.filter((m) => m.title.toLowerCase().search(string) !== -1);
+let movies; // List of Discover movies from TMDB
 
-const filterByGenre = (movieList, genreId) =>
-  movieList.filter((m) => m.genre_ids.includes(genreId));
-
-describe("Home Page", () => {
+describe("Filtering", () => {
   before(() => {
     // Get movies from TMDB and store in movies variable.
     cy.request(
@@ -15,7 +10,7 @@ describe("Home Page", () => {
         "TMDB_KEY"
       )}&language=en-US&include_adult=false&include_video=false&page=1`
     )
-      .its("body") // Take the body of HTTP response from TMDB
+      .its("body")
       .then((response) => {
         movies = response.results;
       });
@@ -24,11 +19,10 @@ describe("Home Page", () => {
     cy.visit("/");
   });
 
-  describe("Filtering", () => {
     describe("By movie title", () => {
-      it("should only display movies with m in the title", () => {
-        let searchString = "m";
-        let matchingMovies = filterByTitle(movies, searchString);
+      it("only display movies with 'm' in the title", () => {
+        const searchString = "m";
+        const matchingMovies = filterByTitle(movies, searchString);
         cy.get("#filled-search").clear().type(searchString); // Enter m in text box
         cy.get(".MuiCardHeader-content").should(
           "have.length",
@@ -38,28 +32,14 @@ describe("Home Page", () => {
           cy.wrap($card).find("p").contains(matchingMovies[index].title);
         });
       });
-      it("should display no movies when the search string has no matches", () => {
-        // Do a second test for certainty!
-        let searchString = "xyxxzyyzz";
+      it("handles case when there are no matches", () => {
+        const searchString = "xyxxzyyzz";
         cy.get("#filled-search").clear().type(searchString); // Enter m in text box
         cy.get(".MuiCardHeader-content").should("have.length", 0);
       });
-      it("should only display movies with o in the title", () => {
-        // Do a second normal test for certainty!
-        let searchString = "o";
-        let matchingMovies = filterByTitle(movies, searchString);
-        cy.get("#filled-search").clear().type(searchString); // Enter m in text box
-        cy.get(".MuiCardHeader-content").should(
-          "have.length",
-          matchingMovies.length
-        );
-        cy.get(".MuiCardHeader-content").each(($card, index) => {
-          cy.wrap($card).find("p").contains(matchingMovies[index].title);
-        });
-      });
     });
     describe("By movie genre", () => {
-      it("should display movies with the specified genre only", () => {
+      it("display movies with the selected genre", () => {
         const selectedGenreId = 35;
         const selectedGenreText = "Comedy";
         const matchingMovies = filterByGenre(movies, selectedGenreId);
@@ -75,4 +55,3 @@ describe("Home Page", () => {
       });
     });
   });
-});
