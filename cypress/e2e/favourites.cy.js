@@ -18,7 +18,7 @@ describe("The favourites feature", () => {
   });
 
   describe("Selecting favourites", () => {
-    it("selected movie card shows the red heart", () => {
+    it.only("selected movie card shows the red heart", () => {
       cy.get(".MuiCardHeader-root").eq(1).find("svg").should("not.exist");
       cy.get("button[aria-label='add to favourites']").eq(1).click();
       cy.get(".MuiCardHeader-root").eq(1).find("svg");

@@ -20,7 +20,7 @@ describe("Filtering", () => {
   });
 
   describe("By movie title", () => {
-    it("only display movies with 'm' in the title", () => {
+    it.only("only display movies with 'm' in the title", () => {
       const searchString = "m";
       const matchingMovies = filterByTitle(movies, searchString);
       cy.get("#filled-search").clear().type(searchString); // Enter m in text box
