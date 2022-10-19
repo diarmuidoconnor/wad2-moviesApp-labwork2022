@@ -15,6 +15,7 @@
     "react-scripts": "5.0.0"
   },
   "scripts": {
+    "start:ci": "start-server-and-test 'http-server ./build  -p 3000 -P http://localhost:3000?' 3000 'cypress run --browser chrome '",
     "storybook": "start-storybook -p 6006 -s public",
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -47,6 +48,8 @@
     "@storybook/preset-create-react-app": "^4.0.0",
     "@storybook/react": "^6.4.18",
     "cypress": "^10.9.0",
-    "html-webpack-plugin": "^5.5.0"
+    "html-webpack-plugin": "^5.5.0",
+    "http-server": "^14.1.1",
+    "start-server-and-test": "^1.14.0"
   }
 }
