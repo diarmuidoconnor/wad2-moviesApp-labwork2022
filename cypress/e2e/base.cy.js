@@ -19,7 +19,7 @@ describe("Base tests", () => {
   });
 
   describe("The Discover Movies page", () => {
-    i.onlyt("displays the page header and 20 movies", () => {
+    it.onlyt("displays the page header and 20 movies", () => {
       cy.get("h3").contains("Discover Movies");
       cy.get(".MuiCardHeader-root").should("have.length", 20);
     });
