@@ -1,4 +1,3 @@
-# Node docker image with Cypress and Chrome pre-installed
 image: node:latest
 
 # Pipeline
@@ -18,9 +17,9 @@ cache:
    paths:
       - .npm
       - cache/Cypress
+      - node_modules
 
 # Jobs 
-      - node_modules
 install_dependencies:
   stage: install
   script:
@@ -38,6 +37,7 @@ bundle_app:
        - build/
 
 e2etest:
+# Node docker image with Cypress and Chrome pre-installed
   image: cypress/browsers:node12.14.1-chrome85-ff81
   stage: test
   script:
